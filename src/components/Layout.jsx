@@ -1,10 +1,14 @@
 import React from "react"
+import Editor from "./Editor"
 
 function Layout() {
 	return (
-		<div>
-			<p>Layout component works</p>
-		</div>
+		<React.Fragment>
+			<div>
+				<p>Layout component works</p>
+				<Editor />
+			</div>
+		</React.Fragment>
 	)
 }
 
