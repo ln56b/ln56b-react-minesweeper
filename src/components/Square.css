@@ -1,9 +1,7 @@
 .square {
   border: 1px solid rgb(53, 53, 53);
-  float: left;
   font-size: 10px;
-  font-weight: bold;
-  line-height: 34px;
+  line-height: 20px;
   height: 20px;
   margin-right: -1px;
   margin-top: -1px;
