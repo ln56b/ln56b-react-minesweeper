@@ -1,12 +1,22 @@
 import React, { useReducer, useState } from "react"
 
+const levelsEnum = {
+	Beginner: "beginner",
+	Intermediary: "intermediary",
+	Expert: "expert",
+	Custom: "custom"
+}
+
+const initialFormState = {
+	level: levelsEnum.Beginner,
+	marks: false
+}
+
 const formReducer = (state, event) => {
 	if (event.reset) {
 		return {
-			apple: "",
-			count: 0,
-			name: "",
-			"gift-wrap": false
+			level: levelsEnum.Beginner,
+			marks: false
 		}
 	}
 	return {
@@ -16,11 +26,7 @@ const formReducer = (state, event) => {
 }
 
 function Editor() {
-	const [formData, setFormData] = useReducer(formReducer, {
-		count: 100
-	})
-	const [level, setLevel] = useState("beginner")
-
+	const [formData, setFormData] = useReducer(formReducer, initialFormState)
 	const [submitting, setSubmitting] = useState(false)
 
 	const handleSubmit = (event) => {
@@ -40,12 +46,6 @@ function Editor() {
 		setFormData({
 			name: event.target.name,
 			value: isCheckbox ? event.target.checked : event.target.value
-		})
-	}
-
-	const onLevelChange = (event) => {
-		this.setState({
-			selectedOption: event.target.value
 		})
 	}
 
@@ -80,9 +80,10 @@ function Editor() {
 						<label>
 							<input
 								type='radio'
-								value='beginner'
-								checked={level === formData.beginner}
-								onChange={onLevelChange}
+								name='level'
+								value={levelsEnum.Beginner}
+								checked={formData.level === levelsEnum.Beginner}
+								onChange={handleChange}
 							/>
 							Beginner
 						</label>
@@ -92,9 +93,10 @@ function Editor() {
 						<label>
 							<input
 								type='radio'
-								value='intermediary'
-								checked={level === formData.intermediary}
-								onChange={onLevelChange}
+								name='level'
+								value={levelsEnum.Intermediary}
+								checked={formData.level === levelsEnum.Intermediary}
+								onChange={handleChange}
 							/>
 							Intermediary
 						</label>
@@ -103,9 +105,10 @@ function Editor() {
 						<label>
 							<input
 								type='radio'
-								value='expert'
-								checked={level === formData.expert}
-								onChange={onLevelChange}
+								name='level'
+								value={levelsEnum.Expert}
+								checked={formData.level === levelsEnum.Expert}
+								onChange={handleChange}
 							/>
 							Expert
 						</label>
@@ -114,14 +117,24 @@ function Editor() {
 						<label>
 							<input
 								type='radio'
-								value='custom'
-								checked={level === formData.custom}
-								onChange={onLevelChange}
+								name='level'
+								value={levelsEnum.Custom}
+								checked={formData.level === levelsEnum.Custom}
+								onChange={handleChange}
 							/>
-							Expert
+							Custom
 						</label>
 					</div>
 				</fieldset>
+				<label>
+					<p>Marks?</p>
+					<input
+						checked={formData["marks"] || false}
+						name='marks'
+						onChange={handleChange}
+						type='checkbox'
+					/>
+				</label>
 				<button type='submit' disabled={submitting}>
 					Submit
 				</button>
