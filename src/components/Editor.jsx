@@ -98,8 +98,8 @@ function Editor() {
 						<TableHead>
 							<TableRow>
 								<TableCell>Levels</TableCell>
-								{["Height", "Width", "Mines"].map((name, id) => (
-									<TableCell align='right' key={id}>
+								{["Height", "Width", "Mines"].map((name) => (
+									<TableCell align='right' key={name}>
 										{name}
 									</TableCell>
 								))}
@@ -122,8 +122,8 @@ function Editor() {
 									</div>
 								</TableCell>
 								{createReadonlyCell("height", 9)}
-								{createReadonlyCell("height", 9)}
-								{createReadonlyCell("height", 10)}
+								{createReadonlyCell("width", 9)}
+								{createReadonlyCell("mines", 10)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -141,8 +141,8 @@ function Editor() {
 									</div>
 								</TableCell>
 								{createReadonlyCell("height", 16)}
-								{createReadonlyCell("height", 16)}
-								{createReadonlyCell("height", 40)}
+								{createReadonlyCell("width", 16)}
+								{createReadonlyCell("mines", 40)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -160,8 +160,8 @@ function Editor() {
 									</div>
 								</TableCell>
 								{createReadonlyCell("height", 16)}
-								{createReadonlyCell("height", 30)}
-								{createReadonlyCell("height", 99)}
+								{createReadonlyCell("width", 30)}
+								{createReadonlyCell("mines", 99)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
