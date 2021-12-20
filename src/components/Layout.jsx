@@ -1,4 +1,5 @@
 import React from "react"
+import Editor from "./Editor"
 import Table from "./Table"
 
 const height = 6
@@ -33,14 +34,16 @@ function Layout() {
 	const [mines, setMines] = React.useState(testMines)
 
 	return (
-		<div>
+		<React.Fragment>
+			<p>Layout component works</p>
+			<Editor />
 			<Table
 				width={width}
 				height={height}
 				mineNumber={mineNumber}
 				mines={mines}
 			/>
-		</div>
+		</React.Fragment>
 	)
 }
 
