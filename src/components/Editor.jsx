@@ -8,22 +8,22 @@ import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import Button from "@mui/material/Button"
 
-const levelsEnum = {
+const LEVELS = {
 	Beginner: "beginner",
-	Intermediary: "intermediary",
+	Intermediate: "intermediate",
 	Expert: "expert",
 	Custom: "custom"
 }
 
 const initialFormState = {
-	level: levelsEnum.Beginner,
+	level: LEVELS.Beginner,
 	marks: false
 }
 
 const formReducer = (state, event) => {
 	if (event.reset) {
 		return {
-			level: levelsEnum.Beginner,
+			level: LEVELS.Beginner,
 			marks: false
 		}
 	}
@@ -78,80 +78,99 @@ function Editor() {
 						<TableHead>
 							<TableRow>
 								<TableCell>Levels</TableCell>
-								<TableCell align='right'>Height</TableCell>
-								<TableCell align='right'>Width</TableCell>
-								<TableCell align='right'>Mines</TableCell>
+								{["Height", "Width", "Mines"].map((name, id) => (
+									<TableCell align='right' key={id}>
+										{name}
+									</TableCell>
+								))}
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{/* <fieldset disabled={submitting}> */}
 							<TableRow>
 								<TableCell>
 									<div className='radio'>
 										<label>
-											<p>{levelsEnum.Beginner}</p>
+											<p>{LEVELS.Beginner}</p>
 											<input
 												type='radio'
 												name='level'
-												value={levelsEnum.Beginner}
-												checked={formData.level === levelsEnum.Beginner}
+												value={LEVELS.Beginner}
+												checked={formData.level === LEVELS.Beginner}
 												onChange={handleChange}
 											/>
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>9</TableCell>
-								<TableCell align='right'>9</TableCell>
-								<TableCell align='right'>10</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={9} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={9} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={10} readOnly />
+								</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
 									<div className='radio'>
 										<label>
-											<p>{levelsEnum.Intermediary}</p>
+											<p>{LEVELS.Intermediate}</p>
 											<input
 												type='radio'
 												name='level'
-												value={levelsEnum.Intermediary}
-												checked={formData.level === levelsEnum.Intermediary}
+												value={LEVELS.Intermediate}
+												checked={formData.level === LEVELS.Intermediate}
 												onChange={handleChange}
 											/>
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>16</TableCell>
-								<TableCell align='right'>16</TableCell>
-								<TableCell align='right'>40</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={16} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={16} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={40} readOnly />
+								</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
 									<div className='radio'>
 										<label>
-											<p>{levelsEnum.Expert}</p>
+											<p>{LEVELS.Expert}</p>
 											<input
 												type='radio'
 												name='level'
-												value={levelsEnum.Expert}
-												checked={formData.level === levelsEnum.Expert}
+												value={LEVELS.Expert}
+												checked={formData.level === LEVELS.Expert}
 												onChange={handleChange}
 											/>
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>16</TableCell>
-								<TableCell align='right'>30</TableCell>
-								<TableCell align='right'>99</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={16} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={30} readOnly />
+								</TableCell>
+								<TableCell align='right'>
+									<input name='height' value={99} readOnly />
+								</TableCell>
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
 									<div className='radio'>
 										<label>
-											<p>{levelsEnum.Custom}</p>
+											<p>{LEVELS.Custom}</p>
 											<input
 												type='radio'
 												name='level'
-												value={levelsEnum.Custom}
-												checked={formData.level === levelsEnum.Custom}
+												value={LEVELS.Custom}
+												checked={formData.level === LEVELS.Custom}
 												onChange={handleChange}
 											/>
 										</label>
@@ -162,20 +181,32 @@ function Editor() {
 										name='height'
 										onChange={handleChange}
 										value={formData.height || ""}
+										disabled={formData.level !== LEVELS.Custom}
+										type='number'
+										min={1}
+										max={50}
 									/>
 								</TableCell>
 								<TableCell align='right'>
 									<input
-										name='height'
+										name='width'
 										onChange={handleChange}
 										value={formData.width || ""}
+										disabled={formData.level !== LEVELS.Custom}
+										type='number'
+										min={1}
+										max={50}
 									/>
 								</TableCell>
 								<TableCell align='right'>
 									<input
-										name='height'
+										name='mines'
 										onChange={handleChange}
 										value={formData.mines || ""}
+										disabled={formData.level !== LEVELS.Custom}
+										type='number'
+										min={1}
+										max={200}
 									/>
 								</TableCell>
 							</TableRow>
@@ -192,7 +223,6 @@ function Editor() {
 									</label>
 								</TableCell>
 							</TableRow>
-							{/* </fieldset> */}
 						</TableBody>
 					</Table>
 				</TableContainer>
