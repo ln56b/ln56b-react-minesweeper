@@ -57,6 +57,26 @@ function Editor() {
 		})
 	}
 
+	const createReadonlyCell = (name, value) => (
+		<TableCell align='right'>
+			<input name={name} value={value} readOnly={true} />
+		</TableCell>
+	)
+
+	const createNumberCell = (name, value, min, max) => (
+		<TableCell align='right'>
+			<input
+				name={name}
+				onChange={handleChange}
+				value={value || ""}
+				disabled={formData.level !== LEVELS.Custom}
+				type='number'
+				min={min}
+				max={max}
+			/>
+		</TableCell>
+	)
+
 	return (
 		<div className='wrapper'>
 			<h1>Customize the board</h1>
@@ -101,15 +121,9 @@ function Editor() {
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={9} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={9} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={10} readOnly />
-								</TableCell>
+								{createReadonlyCell("height", 9)}
+								{createReadonlyCell("height", 9)}
+								{createReadonlyCell("height", 10)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -126,15 +140,9 @@ function Editor() {
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={16} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={16} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={40} readOnly />
-								</TableCell>
+								{createReadonlyCell("height", 16)}
+								{createReadonlyCell("height", 16)}
+								{createReadonlyCell("height", 40)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -151,15 +159,9 @@ function Editor() {
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={16} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={30} readOnly />
-								</TableCell>
-								<TableCell align='right'>
-									<input name='height' value={99} readOnly />
-								</TableCell>
+								{createReadonlyCell("height", 16)}
+								{createReadonlyCell("height", 30)}
+								{createReadonlyCell("height", 99)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -176,39 +178,9 @@ function Editor() {
 										</label>
 									</div>
 								</TableCell>
-								<TableCell align='right'>
-									<input
-										name='height'
-										onChange={handleChange}
-										value={formData.height || ""}
-										disabled={formData.level !== LEVELS.Custom}
-										type='number'
-										min={1}
-										max={50}
-									/>
-								</TableCell>
-								<TableCell align='right'>
-									<input
-										name='width'
-										onChange={handleChange}
-										value={formData.width || ""}
-										disabled={formData.level !== LEVELS.Custom}
-										type='number'
-										min={1}
-										max={50}
-									/>
-								</TableCell>
-								<TableCell align='right'>
-									<input
-										name='mines'
-										onChange={handleChange}
-										value={formData.mines || ""}
-										disabled={formData.level !== LEVELS.Custom}
-										type='number'
-										min={1}
-										max={200}
-									/>
-								</TableCell>
+								{createNumberCell("height", formData.height, 1, 50)}
+								{createNumberCell("width", formData.width, 1, 50)}
+								{createNumberCell("mines", formData.mines, 1, 200)}
 							</TableRow>
 							<TableRow>
 								<TableCell align='center' colSpan={4}>
