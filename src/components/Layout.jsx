@@ -5,11 +5,15 @@ const height = 6
 const width = 9
 const testMineNumber = 10
 
+const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
+
 function Layout() {
-	const baseArray = Array(width).fill(Array(height).fill(false))
-  const testMines = JSON.parse(JSON.stringify(baseArray))
+  const testMines = createFilledTable(width, height, false)
   testMines[0][0] = true
-	const [mineNumber, setMineNumber] = React.useState(testMineNumber)
+	testMines[3][4] = true
+	testMines[8][2] = true
+	testMines[2][1] = true
+ 	const [mineNumber, setMineNumber] = React.useState(testMineNumber)
 	const [mines, setMines] = React.useState(testMines)
 
 	return (

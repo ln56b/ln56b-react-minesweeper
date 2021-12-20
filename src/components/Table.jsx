@@ -2,22 +2,41 @@ import './Table.css'
 import React from 'react'
 import Square from './Square'
 
-function Table({ height, width, mineNumber, mines }) {
-  const baseFieldArray = Array(width).fill(Array(height).fill(false))
-  const baseValueArray = Array(width).fill(Array(height).fill(0))
+const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
 
-  const [openFields, setOpenFields] = React.useState(baseFieldArray)
-  const [fieldValues, setFieldValues] = React.useState(baseValueArray)
+const calculateFieldValue = (x, y, mines) => {
+  if (x < 0 || mines.length <= x || y < 0 || mines[0].length <= y) {
+    throw new Error('calculateFieldValue: invalid parameters')
+  }
+  let sum = !!mines[x][y-1] + !!mines[x][y+1]
+  if (x !== 0) {
+    sum += !!mines[x-1][y-1] + !!mines[x-1][y] + !!mines[x-1][y+1]
+  }
+  if (x !== mines.length - 1) {
+    sum += !!mines[x+1][y-1] + !!mines[x+1][y] + !!mines[x+1][y+1]
+  }
+  return sum
+}
+
+const calculateFieldValues = (width, height, mines) => {
+  let fieldValues = createFilledTable(width, height, 0)
+
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      fieldValues[x][y] = calculateFieldValue(x, y, mines)
+    }
+  }
+  return fieldValues
+}
+
+function Table({ width, height, mineNumber, mines }) {
+  const [openFields, setOpenFields] = React.useState(createFilledTable(width, height, false))
+  const [fieldValues, setFieldValues] = React.useState(createFilledTable(width, height, 0))
 
   React.useEffect(() => {
-    setOpenFields(baseFieldArray)
-    setFieldValues(generateNewFieldValues(mines))
-  }, [mines])
-
-  function generateNewFieldValues(newMines) {
-    // TODO: calculate all the values based on the new location of the mines
-    return baseValueArray
-  }
+    setOpenFields(createFilledTable(width, height, false))
+    setFieldValues(calculateFieldValues(width, height, mines))
+  }, [mines, height, width])
 
   function openField(x,y) {
     if (openFields[x][y]) {
@@ -31,7 +50,7 @@ function Table({ height, width, mineNumber, mines }) {
 	return (
 		<div className="table">
 			{
-        baseFieldArray.map((column, x) => (
+        createFilledTable(width, height, 0).map((column, x) => (
           <div className="table-column" key={x}>
             {
               column.map((field, y) => (
