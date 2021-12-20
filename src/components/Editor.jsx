@@ -33,7 +33,7 @@ const formReducer = (state, event) => {
 	}
 }
 
-function Editor() {
+function Editor({ submitForm }) {
 	const [formData, setFormData] = useReducer(formReducer, initialFormState)
 	const [submitting, setSubmitting] = useState(false)
 
@@ -41,8 +41,10 @@ function Editor() {
 		event.preventDefault()
 		setSubmitting(true)
 
+		submitForm(formData)
 		setTimeout(() => {
 			setSubmitting(false)
+
 			setFormData({
 				reset: true
 			})
@@ -64,7 +66,7 @@ function Editor() {
 	)
 
 	const createNumberCell = (name, value, min, max) => (
-		<TableCell align='right'>
+		<TableCell align='right' submit={false}>
 			<input
 				name={name}
 				onChange={handleChange}
