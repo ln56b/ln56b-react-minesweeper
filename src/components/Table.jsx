@@ -52,7 +52,7 @@ function Table({ width, height, mineNumber, mines }) {
 			{
         createFilledTable(width, height, 0).map((column, x) => (
           <div className="table-column" key={x}>
-            {
+            { (fieldValues.length === width && openFields.length === width) &&
               column.map((field, y) => (
                 <Square
                   key={`${x.toString()},${y.toString()}`}
