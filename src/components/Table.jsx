@@ -34,7 +34,7 @@ const openArea = ({ openFields, fieldValues, x, y }) => {
     return;
   }
   openFields[x][y] = true;
-  if (fieldValues[x][y] !== 0) {
+  if (fieldValues[x][y] > 0) {
     return openFields;
   }
   for (let x1 of [x-1, x, x+1]) {
