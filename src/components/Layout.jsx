@@ -30,12 +30,19 @@ const generateRandomMines = (width, height, mineNumber) => {
 	return mines
 }
 
+
 function Layout() {
 	const [mineNumber, setMineNumber] = React.useState(13)
 	const [height, setHeight] = React.useState(6)
 	const [width, setWidth] = React.useState(4)
 	const testMines = generateRandomMines(width, height, mineNumber)
 	const [mines, setMines] = React.useState(testMines)
+	const [openCellsNumber, setOpenCellsNumber] = React.useState(0)
+	
+	const onTableOpenField = (tableOpenCellEvent) =>{
+		setOpenCellsNumber(tableOpenCellEvent)
+
+	}
 
 	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
 		setHeight(newHeight)
@@ -53,6 +60,8 @@ function Layout() {
 				height={height}
 				mineNumber={mineNumber}
 				mines={mines}
+				openCells={openCellsNumber}
+				layoutCallback={onTableOpenField}
 			/>
 		</React.Fragment>
 	)

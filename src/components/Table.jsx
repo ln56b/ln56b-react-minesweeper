@@ -29,7 +29,7 @@ const calculateFieldValues = (width, height, mines) => {
   return fieldValues
 }
 
-function Table({ width, height, mineNumber, mines }) {
+function Table({ width, height, mineNumber, mines, openCells, layoutCallback }) {
   const [openFields, setOpenFields] = React.useState(createFilledTable(width, height, false))
   const [fieldValues, setFieldValues] = React.useState(createFilledTable(width, height, 0))
 
@@ -45,6 +45,8 @@ function Table({ width, height, mineNumber, mines }) {
     const newOpenFields = JSON.parse(JSON.stringify(openFields))
     newOpenFields[x][y] = true
     setOpenFields(newOpenFields)
+    layoutCallback(openCells + 1);
+
   }
 
 	return (
