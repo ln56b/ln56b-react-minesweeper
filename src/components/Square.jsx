@@ -3,7 +3,7 @@ import "./Square.css"
 
 function Square({ value, isMine, isOpen, setIsOpen }) {
 
-  const display = isMine ? '💣' : value
+  const display = isMine ? '💣' : (value || '')
   const className = isOpen ? 'open' : 'closed'
 
 	return (
