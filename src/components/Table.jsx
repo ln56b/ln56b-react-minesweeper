@@ -54,6 +54,10 @@ function Table({ width, height, mineNumber, mines }) {
   }, [mines, height, width])
 
   function openField(x,y) {
+    // This condition is not necessary, just speeds up the function if the field is already open.
+    if (openFields[x][y]) {
+      return;
+    }
     let newOpenFields = JSON.parse(JSON.stringify(openFields))
     if (mines[x][y]) {
       newOpenFields[x][y] = true;
