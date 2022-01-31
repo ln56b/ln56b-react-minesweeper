@@ -39,9 +39,10 @@ function Layout() {
 	const [mines, setMines] = React.useState(testMines)
 	const [openCellsNumber, setOpenCellsNumber] = React.useState(0)
 	
-	const onTableOpenField = (openCell) =>{
+	const onTableOpenField = (isMine) =>{
 		setOpenCellsNumber(openCellsNumber + 1)
-		if (openCell) {
+		console.log(openCellsNumber, height * width, mineNumber)
+		if (isMine) {
 			console.log('you lost')
 		}
 		if (openCellsNumber === (height * width - mineNumber)) {
