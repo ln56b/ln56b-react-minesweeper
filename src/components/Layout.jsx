@@ -39,8 +39,14 @@ function Layout() {
 	const [mines, setMines] = React.useState(testMines)
 	const [openCellsNumber, setOpenCellsNumber] = React.useState(0)
 	
-	const onTableOpenField = (tableOpenCellEvent) =>{
-		setOpenCellsNumber(tableOpenCellEvent)
+	const onTableOpenField = (openCell) =>{
+		setOpenCellsNumber(openCellsNumber + 1)
+		if (openCell) {
+			console.log('you lost')
+		}
+		if (openCellsNumber === (height * width - mineNumber)) {
+			console.log('you won')
+		}
 
 	}
 
@@ -60,7 +66,6 @@ function Layout() {
 				height={height}
 				mineNumber={mineNumber}
 				mines={mines}
-				openCells={openCellsNumber}
 				layoutCallback={onTableOpenField}
 			/>
 		</React.Fragment>
