@@ -37,25 +37,20 @@ function Layout() {
 	const [width, setWidth] = React.useState(4)
 	const testMines = generateRandomMines(width, height, mineNumber)
 	const [mines, setMines] = React.useState(testMines)
-	const [openCellsNumber, setOpenCellsNumber] = React.useState(0)
-	
-	const onTableOpenField = (isMine) =>{
-		setOpenCellsNumber(openCellsNumber + 1)
-		console.log(openCellsNumber, height * width, mineNumber)
-		if (isMine) {
-			console.log('you lost')
-		}
-		if (openCellsNumber === (height * width - mineNumber)) {
-			console.log('you won')
-		}
-
-	}
 
 	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
 		setHeight(newHeight)
 		setWidth(newWidth)
 		setMineNumber(newMines)
 		setMines(() => generateRandomMines(newWidth, newHeight, newMines))
+	}
+
+	const onGameEnd = (state) => {
+		if (state === 'win') {
+			console.log('you won!')
+		} else {
+			console.log('you lost!')
+		}
 	}
 
 	return (
@@ -67,7 +62,7 @@ function Layout() {
 				height={height}
 				mineNumber={mineNumber}
 				mines={mines}
-				layoutCallback={onTableOpenField}
+				endGame={onGameEnd}
 			/>
 		</React.Fragment>
 	)

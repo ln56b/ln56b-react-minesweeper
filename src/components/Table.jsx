@@ -29,47 +29,55 @@ const calculateFieldValues = (width, height, mines) => {
   return fieldValues
 }
 
+let openCellsNumber = 0
 
-
-function Table({ width, height, mineNumber, mines, layoutCallback }) {
+function Table({ width, height, mineNumber, mines, endGame }) {
   const [openFields, setOpenFields] = React.useState(createFilledTable(width, height, false))
   const [fieldValues, setFieldValues] = React.useState(createFilledTable(width, height, 0))
 
   const openArea = ({ openFields, fieldValues, x, y }) => {
     if (x < 0 || openFields.length <= x || y < 0 || openFields[0].length <= y || openFields[x][y]) {
-      return;
+      return 
     }
-    openFields[x][y] = true;
-    layoutCallback(false);
+    openFields[x][y] = true
+    openCellsNumber++
     
     if (fieldValues[x][y] > 0) {
-      return openFields;
+      return openFields
     }
     for (let x1 of [x-1, x, x+1]) {
       for (let y1 of [y-1, y, y+1]) {
-        openArea({ openFields, fieldValues, x: x1, y: y1 });
+        openArea({ openFields, fieldValues, x: x1, y: y1 })
       }
     }
   }
 
   React.useEffect(() => {
+    openCellsNumber = 0
     setOpenFields(createFilledTable(width, height, false))
     setFieldValues(calculateFieldValues(width, height, mines))
   }, [mines, height, width])
 
+  React.useEffect(() => {
+    if (mineNumber + openCellsNumber === height * width) {
+      endGame('win')
+    }
+  }, [openCellsNumber])
+
   function openField(x,y) {
     // This condition is not necessary, just speeds up the function if the field is already open.
     if (openFields[x][y]) {
-      return;
+      return
     }
     let newOpenFields = JSON.parse(JSON.stringify(openFields))
     if (mines[x][y]) {
-      newOpenFields[x][y] = true;
-      layoutCallback(true);
+      newOpenFields[x][y] = true
+      openCellsNumber++
+      endGame('lose')
     } else {
-      openArea({ openFields: newOpenFields, fieldValues, x, y });
+      openArea({ openFields: newOpenFields, fieldValues, x, y })
     }
-    setOpenFields(newOpenFields);
+    setOpenFields(newOpenFields)
   }
 
 	return (
