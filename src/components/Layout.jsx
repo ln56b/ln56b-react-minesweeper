@@ -30,6 +30,7 @@ const generateRandomMines = (width, height, mineNumber) => {
 	return mines
 }
 
+
 function Layout() {
 	const [mineNumber, setMineNumber] = React.useState(13)
 	const [height, setHeight] = React.useState(6)
@@ -44,6 +45,14 @@ function Layout() {
 		setMines(() => generateRandomMines(newWidth, newHeight, newMines))
 	}
 
+	const onGameEnd = (state) => {
+		if (state === 'win') {
+			console.log('you won!')
+		} else {
+			console.log('you lost!')
+		}
+	}
+
 	return (
 		<React.Fragment>
 			<p>Layout component works</p>
@@ -53,6 +62,7 @@ function Layout() {
 				height={height}
 				mineNumber={mineNumber}
 				mines={mines}
+				endGame={onGameEnd}
 			/>
 		</React.Fragment>
 	)
