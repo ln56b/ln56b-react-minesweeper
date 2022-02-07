@@ -1,6 +1,7 @@
 import React from "react"
 import Editor from "./Editor"
 import Table from "./Table"
+import Button from "@mui/material/Button"
 
 const createFilledTable = (width, height, value) =>
 	new Array(width)
@@ -37,6 +38,8 @@ function Layout() {
 	const [width, setWidth] = React.useState(4)
 	const testMines = generateRandomMines(width, height, mineNumber)
 	const [mines, setMines] = React.useState(testMines)
+  const [hasFinishedGame, setGameHasFinished] = React.useState(false)
+  const [hasWon, setHasWon] = React.useState(false)
 
 	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
 		setHeight(newHeight)
@@ -47,11 +50,18 @@ function Layout() {
 
 	const onGameEnd = (state) => {
 		if (state === 'win') {
-			console.log('you won!')
+			setHasWon(true)
 		} else {
-			console.log('you lost!')
+			setHasWon(false)
 		}
+		setGameHasFinished(true)
 		
+	}
+
+	const resetGame = () => {
+		setMines(() => generateRandomMines(width, height, mineNumber))
+		setGameHasFinished(false)
+
 	}
 
 	return (
@@ -63,7 +73,23 @@ function Layout() {
 				mineNumber={mineNumber}
 				mines={mines}
 				endGame={onGameEnd}
+				hasFinishedGame={hasFinishedGame}
 			/>
+						{
+				(hasFinishedGame &&	hasWon) &&
+			<h2>You won ! </h2>
+			}
+									{
+				(hasFinishedGame &&	!hasWon) &&
+			<h2>You lost ! </h2>
+			}
+			{
+				hasFinishedGame &&
+			<Button variant='contained' type='submit' onClick={() => resetGame()}>
+		Play again
+		</Button>
+			}
+		
 		</React.Fragment>
 	)
 }
