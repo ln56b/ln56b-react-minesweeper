@@ -34,6 +34,7 @@ let openCellsNumber = 0
 function Table({ width, height, mineNumber, mines, endGame }) {
   const [openFields, setOpenFields] = React.useState(createFilledTable(width, height, false))
   const [fieldValues, setFieldValues] = React.useState(createFilledTable(width, height, 0))
+  const [hasFinishedGame, setGameStatus] = React.useState(false)
 
   const openArea = ({ openFields, fieldValues, x, y }) => {
     if (x < 0 || openFields.length <= x || y < 0 || openFields[0].length <= y || openFields[x][y]) {
@@ -61,6 +62,8 @@ function Table({ width, height, mineNumber, mines, endGame }) {
   React.useEffect(() => {
     if (mineNumber + openCellsNumber === height * width) {
       endGame('win')
+      setGameStatus(true)
+
     }
   }, [openCellsNumber])
 
@@ -74,6 +77,7 @@ function Table({ width, height, mineNumber, mines, endGame }) {
       newOpenFields[x][y] = true
       openCellsNumber++
       endGame('lose')
+      setGameStatus(true)
     } else {
       openArea({ openFields: newOpenFields, fieldValues, x, y })
     }
@@ -93,6 +97,7 @@ function Table({ width, height, mineNumber, mines, endGame }) {
                   isMine={mines[x][y]}
                   isOpen={openFields[x][y]}
                   setIsOpen={() => openField(x, y)}
+                  isReadonly={hasFinishedGame}
                 />
               ))
             }

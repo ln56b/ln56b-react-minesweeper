@@ -51,11 +51,11 @@ function Layout() {
 		} else {
 			console.log('you lost!')
 		}
+		
 	}
 
 	return (
 		<React.Fragment>
-			<p>Layout component works</p>
 			<Editor submitForm={onSubmitForm} />
 			<Table
 				width={width}
