@@ -80,7 +80,7 @@ function Editor({ submitForm }) {
 	)
 
 	const createNumberCell = (name, value, min, max) => (
-		<TableCell align='right' submit={false}>
+		<TableCell align='right'>
 			<input
 				name={name}
 				onChange={handleChange}
