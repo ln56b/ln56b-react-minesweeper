@@ -70,7 +70,7 @@ function Table({ width, height, mineNumber, mines, endGame, hasFinishedGame }) {
     }
   }, [openCellsNumber])
 
-  function openField(x,y) {
+  function openField(x, y) {
     if (fieldStates[x][y] === FIELD_STATES.OPEN || fieldStates[x][y] === FIELD_STATES.FLAGGED) {
       return
     }
@@ -82,6 +82,21 @@ function Table({ width, height, mineNumber, mines, endGame, hasFinishedGame }) {
       openArea({ fieldStates: newFieldStates, fieldValues, x, y })
     }
     setFieldStates(newFieldStates)
+    return
+  }
+
+  function flagField(x, y) {
+    if (fieldStates[x][y] === FIELD_STATES.OPEN) {
+      return
+    }
+    let newFieldStates = JSON.parse(JSON.stringify(fieldStates))
+    if (fieldStates[x][y] === FIELD_STATES.CLOSED) {
+      newFieldStates[x][y] = FIELD_STATES.FLAGGED
+    } else if (fieldStates[x][y] === FIELD_STATES.FLAGGED) {
+      newFieldStates[x][y] = FIELD_STATES.CLOSED
+    }
+    setFieldStates(newFieldStates)
+    return
   }
 
 	return (
@@ -96,7 +111,8 @@ function Table({ width, height, mineNumber, mines, endGame, hasFinishedGame }) {
                   value={fieldValues[x][y]}
                   isMine={mines[x][y]}
                   state={fieldStates[x][y]}
-                  setIsOpen={() => openField(x, y)}
+                  openField={() => openField(x, y)}
+                  flagField={() => flagField(x, y)}
                   isReadonly={hasFinishedGame}
                 />
               ))

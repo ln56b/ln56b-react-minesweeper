@@ -25,7 +25,7 @@ function valueDisplay(value) {
   }
 }
 
-function Square({ value, isMine, state, setIsOpen, isReadonly }) {
+function Square({ value, isMine, state, openField, flagField, isReadonly }) {
   const isOpen = state === FIELD_STATES.OPEN
   const isFlagged = state === FIELD_STATES.FLAGGED
   const className = isOpen ? 'open' : 'closed'
@@ -37,8 +37,20 @@ function Square({ value, isMine, state, setIsOpen, isReadonly }) {
     display = '🚩'
   }
 
+  function handleRightClick(event) {
+    event.preventDefault()
+    if (isReadonly) {
+      return
+    }
+    flagField()
+  }
+
 	return (
-		<button className={className + ' square'} onClick={() => isReadonly ? null : setIsOpen(true)}>
+		<button
+      className={className + ' square'}
+      onClick={() => isReadonly ? null : openField()}
+      onContextMenu={handleRightClick}
+    >
       {display}
     </button>
 	)
