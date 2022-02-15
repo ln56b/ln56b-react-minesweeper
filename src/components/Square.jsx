@@ -1,5 +1,6 @@
 import React from "react"
 import "./Square.css"
+import { FIELD_STATES } from '../config/constants'
 
 function valueDisplay(value) {
   switch (value) {
@@ -24,13 +25,21 @@ function valueDisplay(value) {
   }
 }
 
-function Square({ value, isMine, isOpen, setIsOpen, isReadonly }) {
-  const display = isMine ? '💣' : valueDisplay(value)
+function Square({ value, isMine, state, setIsOpen, isReadonly }) {
+  const isOpen = state === FIELD_STATES.OPEN
+  const isFlagged = state === FIELD_STATES.FLAGGED
   const className = isOpen ? 'open' : 'closed'
+  let display = ''
+
+  if (isOpen) {
+    display = isMine ? '💣' : valueDisplay(value)
+  } else if (isFlagged) {
+    display = '🚩'
+  }
 
 	return (
 		<button className={className + ' square'} onClick={() => isReadonly ? null : setIsOpen(true)}>
-      {isOpen && display}
+      {display}
     </button>
 	)
 }
