@@ -30,7 +30,7 @@ function Square({ value, isMine, isOpen, setIsOpen, isReadonly }) {
 
 	return (
 		<button className={className + ' square'} onClick={() => isReadonly ? null : setIsOpen(true)}>
-      { isOpen && display}
+      {isOpen && display}
     </button>
 	)
 }

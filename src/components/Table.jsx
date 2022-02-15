@@ -72,7 +72,7 @@ function Table({ width, height, mineNumber, mines, endGame, hasFinishedGame }) {
     }
     let newOpenFields = JSON.parse(JSON.stringify(openFields))
     if (mines[x][y]) {
-      openCellsNumber++
+      newOpenFields[x][y] = true
       endGame('lose')
     } else {
       openArea({ openFields: newOpenFields, fieldValues, x, y })
