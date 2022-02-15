@@ -2,6 +2,7 @@ import React from "react"
 import Editor from "./Editor"
 import Table from "./Table"
 import Button from "@mui/material/Button"
+import Timer from "./Timer"
 
 const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
 
@@ -39,6 +40,7 @@ function Layout() {
 	const [height, setHeight] = React.useState(testHeight)
 	const [width, setWidth] = React.useState(testWidth)
 	const [mines, setMines] = React.useState(testMines)
+	const [hasStartedGame, setGameHasStarted] = React.useState(false)
   const [hasFinishedGame, setGameHasFinished] = React.useState(false)
   const [hasWon, setHasWon] = React.useState(false)
 
@@ -50,6 +52,7 @@ function Layout() {
 		setWidth(newWidth)
 		setMineNumber(newMines)
 		setMines(generateRandomMines(newWidth, newHeight, newMines))
+		setGameHasStarted(true)
 	}
 
 	const onGameEnd = (state) => {
@@ -71,6 +74,9 @@ function Layout() {
 	return (
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
+			{(hasStartedGame && !hasFinishedGame) && 
+			<Timer />
+			}
 			<Table
 				width={width}
 				height={height}
@@ -88,7 +94,7 @@ function Layout() {
 			<h2>You lost ! </h2>
 			}
 			{
-				hasFinishedGame &&
+				hasFinishedGame && 
 			<Button variant='contained' type='submit' onClick={() => resetGame()}>
 		Play again
 		</Button>
