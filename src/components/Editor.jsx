@@ -49,11 +49,12 @@ function Editor({ submitForm }) {
 			formData.height = 16
 			formData.width= 16
 			formData.mines = 40
-		}else if (formData.level === LEVELS.Expert) {
+		} else if (formData.level === LEVELS.Expert) {
 			formData.height = 16
 			formData.width= 30
 			formData.mines = 99
 		}
+
 
 		submitForm(formData)
 		setTimeout(() => {
@@ -80,7 +81,7 @@ function Editor({ submitForm }) {
 	)
 
 	const createNumberCell = (name, value, min, max) => (
-		<TableCell align='right' submit={false}>
+		<TableCell align='right'>
 			<input
 				name={name}
 				onChange={handleChange}

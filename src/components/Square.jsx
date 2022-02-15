@@ -24,14 +24,13 @@ function valueDisplay(value) {
   }
 }
 
-function Square({ value, isMine, isOpen, setIsOpen }) {
-
+function Square({ value, isMine, isOpen, setIsOpen, isReadonly }) {
   const display = isMine ? '💣' : valueDisplay(value)
   const className = isOpen ? 'open' : 'closed'
 
 	return (
-		<button className={className + ' square'} onClick={() => setIsOpen(true)}>
-      { isOpen && display }
+		<button className={className + ' square'} onClick={() => isReadonly ? null : setIsOpen(true)}>
+      {isOpen && display}
     </button>
 	)
 }

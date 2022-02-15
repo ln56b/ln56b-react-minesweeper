@@ -31,7 +31,7 @@ const calculateFieldValues = (width, height, mines) => {
 
 let openCellsNumber = 0
 
-function Table({ width, height, mineNumber, mines, endGame }) {
+function Table({ width, height, mineNumber, mines, endGame, hasFinishedGame }) {
   const [openFields, setOpenFields] = React.useState(createFilledTable(width, height, false))
   const [fieldValues, setFieldValues] = React.useState(createFilledTable(width, height, 0))
 
@@ -61,6 +61,7 @@ function Table({ width, height, mineNumber, mines, endGame }) {
   React.useEffect(() => {
     if (mineNumber + openCellsNumber === height * width) {
       endGame('win')
+
     }
   }, [openCellsNumber])
 
@@ -72,7 +73,6 @@ function Table({ width, height, mineNumber, mines, endGame }) {
     let newOpenFields = JSON.parse(JSON.stringify(openFields))
     if (mines[x][y]) {
       newOpenFields[x][y] = true
-      openCellsNumber++
       endGame('lose')
     } else {
       openArea({ openFields: newOpenFields, fieldValues, x, y })
@@ -93,6 +93,7 @@ function Table({ width, height, mineNumber, mines, endGame }) {
                   isMine={mines[x][y]}
                   isOpen={openFields[x][y]}
                   setIsOpen={() => openField(x, y)}
+                  isReadonly={hasFinishedGame}
                 />
               ))
             }
