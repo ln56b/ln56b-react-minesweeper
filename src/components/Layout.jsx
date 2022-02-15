@@ -3,10 +3,7 @@ import Editor from "./Editor"
 import Table from "./Table"
 import Button from "@mui/material/Button"
 
-const createFilledTable = (width, height, value) =>
-	new Array(width)
-		.fill(null)
-		.map(() => new Array(height).fill(value))
+const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
 
 const randomInt = (n) => Math.floor(Math.random() * n)
 
@@ -31,21 +28,28 @@ const generateRandomMines = (width, height, mineNumber) => {
 	return mines
 }
 
+const testMineNumber = 13
+const testWidth = 8
+const testHeight = 6
+const testMines = generateRandomMines(testWidth, testHeight, testMineNumber)
+
 
 function Layout() {
-	const [mineNumber, setMineNumber] = React.useState(13)
-	const [height, setHeight] = React.useState(6)
-	const [width, setWidth] = React.useState(4)
-	const testMines = generateRandomMines(width, height, mineNumber)
+	const [mineNumber, setMineNumber] = React.useState(testMineNumber)
+	const [height, setHeight] = React.useState(testHeight)
+	const [width, setWidth] = React.useState(testWidth)
 	const [mines, setMines] = React.useState(testMines)
   const [hasFinishedGame, setGameHasFinished] = React.useState(false)
   const [hasWon, setHasWon] = React.useState(false)
 
 	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
+		newHeight = Number(newHeight)
+		newWidth = Number(newWidth)
+		newMines = Number(newMines)
 		setHeight(newHeight)
 		setWidth(newWidth)
 		setMineNumber(newMines)
-		setMines(() => generateRandomMines(newWidth, newHeight, newMines))
+		setMines(generateRandomMines(newWidth, newHeight, newMines))
 	}
 
 	const onGameEnd = (state) => {
