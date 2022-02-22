@@ -43,8 +43,8 @@ function Layout() {
 	const [width, setWidth] = React.useState(testWidth)
 	const [mines, setMines] = React.useState(testMines)
 	const [hasStartedGame, setGameHasStarted] = React.useState(false)
-  const [hasFinishedGame, setGameHasFinished] = React.useState(false)
-  const [hasWon, setHasWon] = React.useState(false)
+	const [hasFinishedGame, setGameHasFinished] = React.useState(false)
+	const [hasWon, setHasWon] = React.useState(false)
 	const [timer, setTimer] = React.useState(0)
 
 	const onSubmitForm = ({
@@ -62,6 +62,9 @@ function Layout() {
 		setGameHasStarted(true)
 	}
 
+	const onFinalCount = (count) => {
+		setTimer(count)
+	}
 
 	const onGameEnd = (state) => {
 		if (state === "win") {
@@ -80,6 +83,9 @@ function Layout() {
 	return (
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
+			{hasStartedGame && (
+				<Timer hasFinishedGame={hasFinishedGame} finalTimer={onFinalCount} />
+			)}
 			{hasStartedGame && hasFinishedGame && <div>{timer}</div>}
 			<Table
 				width={width}
@@ -92,9 +98,9 @@ function Layout() {
 			{hasFinishedGame && hasWon && <h2>You won ! </h2>}
 			{hasFinishedGame && !hasWon && <h2>You lost ! </h2>}
 			{hasFinishedGame && (
-			<Button variant='contained' type='submit' onClick={() => resetGame()}>
-		Play again
-		</Button>
+				<Button variant='contained' type='submit' onClick={() => resetGame()}>
+					Play again
+				</Button>
 			)}
 		</React.Fragment>
 	)

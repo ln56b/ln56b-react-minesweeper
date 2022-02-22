@@ -1,17 +1,18 @@
 import React from "react"
 
-function Timer() {
-  const [counter, setCounter] = React.useState(0);
+function Timer({ hasFinishedGame, finalTimer }) {
+	const [timer, settimer] = React.useState(0)
 
-  React.useEffect(() => {
-    const timer =
-      setInterval(() => setCounter(counter + 1), 1000);
-    return () => clearInterval(timer);
-  }, [counter]);
+	React.useEffect(() => {
+		setTimeout(() => settimer(timer + 1), 1000)
+	}, [timer])
 
-  return (
-    <div>{counter}</div>
-  )
+	React.useEffect(() => {
+		console.log(timer)
+		finalTimer(timer)
+	}, [hasFinishedGame])
+
+	return <div>{!hasFinishedGame && timer}</div>
 }
 
 export default Timer
