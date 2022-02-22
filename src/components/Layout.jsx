@@ -4,13 +4,16 @@ import Table from "./Table"
 import Button from "@mui/material/Button"
 import Timer from "./Timer"
 
-const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
+const createFilledTable = (width, height, value) =>
+	Array(width)
+		.fill(null)
+		.map(() => new Array(height).fill(value))
 
 const randomInt = (n) => Math.floor(Math.random() * n)
 
 const generateRandomMines = (width, height, mineNumber) => {
 	if (!width || !height) {
-		throw new Error('generateRandomMines: no width or height given')
+		throw new Error("generateRandomMines: no width or height given")
 	}
 	let mines = createFilledTable(width, height, false)
 	if (mineNumber === 0) {
@@ -34,7 +37,6 @@ const testWidth = 8
 const testHeight = 6
 const testMines = generateRandomMines(testWidth, testHeight, testMineNumber)
 
-
 function Layout() {
 	const [mineNumber, setMineNumber] = React.useState(testMineNumber)
 	const [height, setHeight] = React.useState(testHeight)
@@ -43,8 +45,13 @@ function Layout() {
 	const [hasStartedGame, setGameHasStarted] = React.useState(false)
   const [hasFinishedGame, setGameHasFinished] = React.useState(false)
   const [hasWon, setHasWon] = React.useState(false)
+	const [timer, setTimer] = React.useState(0)
 
-	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
+	const onSubmitForm = ({
+		height: newHeight,
+		width: newWidth,
+		mines: newMines
+	}) => {
 		newHeight = Number(newHeight)
 		newWidth = Number(newWidth)
 		newMines = Number(newMines)
@@ -55,28 +62,25 @@ function Layout() {
 		setGameHasStarted(true)
 	}
 
+
 	const onGameEnd = (state) => {
-		if (state === 'win') {
+		if (state === "win") {
 			setHasWon(true)
 		} else {
 			setHasWon(false)
 		}
 		setGameHasFinished(true)
-		
 	}
 
 	const resetGame = () => {
 		setMines(() => generateRandomMines(width, height, mineNumber))
 		setGameHasFinished(false)
-
 	}
 
 	return (
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
-			{(hasStartedGame && !hasFinishedGame) && 
-			<Timer />
-			}
+			{hasStartedGame && hasFinishedGame && <div>{timer}</div>}
 			<Table
 				width={width}
 				height={height}
@@ -85,21 +89,13 @@ function Layout() {
 				endGame={onGameEnd}
 				hasFinishedGame={hasFinishedGame}
 			/>
-						{
-				(hasFinishedGame &&	hasWon) &&
-			<h2>You won ! </h2>
-			}
-									{
-				(hasFinishedGame &&	!hasWon) &&
-			<h2>You lost ! </h2>
-			}
-			{
-				hasFinishedGame && 
+			{hasFinishedGame && hasWon && <h2>You won ! </h2>}
+			{hasFinishedGame && !hasWon && <h2>You lost ! </h2>}
+			{hasFinishedGame && (
 			<Button variant='contained' type='submit' onClick={() => resetGame()}>
 		Play again
 		</Button>
-			}
-		
+			)}
 		</React.Fragment>
 	)
 }

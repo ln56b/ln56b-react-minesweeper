@@ -43,18 +43,17 @@ function Editor({ submitForm }) {
 
 		if (formData.level === LEVELS.Beginner) {
 			formData.height = 9
-			formData.width= 9
+			formData.width = 9
 			formData.mines = 10
 		} else if (formData.level === LEVELS.Intermediate) {
 			formData.height = 16
-			formData.width= 16
+			formData.width = 16
 			formData.mines = 40
 		} else if (formData.level === LEVELS.Expert) {
 			formData.height = 16
-			formData.width= 30
+			formData.width = 30
 			formData.mines = 99
 		}
-
 
 		submitForm(formData)
 		setTimeout(() => {
