@@ -8,7 +8,6 @@ function Timer({ hasFinishedGame, finalTimer }) {
 	}, [timer])
 
 	React.useEffect(() => {
-		console.log(timer)
 		finalTimer(timer)
 	}, [hasFinishedGame])
 
