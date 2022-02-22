@@ -83,10 +83,12 @@ function Layout() {
 	return (
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
+			{hasStartedGame && <div>{mineNumber}</div>}
 			{hasStartedGame && (
 				<Timer hasFinishedGame={hasFinishedGame} finalTimer={onFinalCount} />
 			)}
 			{hasStartedGame && hasFinishedGame && <div>{timer}</div>}
+			<div onClick={() => resetGame()}>😇</div>
 			<Table
 				width={width}
 				height={height}
