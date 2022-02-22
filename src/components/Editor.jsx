@@ -37,7 +37,7 @@ function Editor({ submitForm }) {
 	const [formData, setFormData] = useReducer(formReducer, initialFormState)
 	const [submitting, setSubmitting] = useState(false)
 
-	const handleSubmit = (event) => {
+	function handleSubmit(event) {
 		event.preventDefault()
 		setSubmitting(true)
 
@@ -65,7 +65,7 @@ function Editor({ submitForm }) {
 		}, 3000)
 	}
 
-	const handleChange = (event) => {
+	function handleChange(event) {
 		const isCheckbox = event.target.type === "checkbox"
 		setFormData({
 			name: event.target.name,

@@ -47,11 +47,11 @@ function Layout() {
 	const [hasWon, setHasWon] = React.useState(false)
 	const [timer, setTimer] = React.useState(0)
 
-	const onSubmitForm = ({
+	function onSubmitForm({
 		height: newHeight,
 		width: newWidth,
 		mines: newMines
-	}) => {
+	}) {
 		newHeight = Number(newHeight)
 		newWidth = Number(newWidth)
 		newMines = Number(newMines)
@@ -62,11 +62,11 @@ function Layout() {
 		setGameHasStarted(true)
 	}
 
-	const onFinalCount = (count) => {
+	function onFinalCount(count) {
 		setTimer(count)
 	}
 
-	const onGameEnd = (state) => {
+	function onGameEnd(state) {
 		if (state === "win") {
 			setHasWon(true)
 		} else {
@@ -75,7 +75,7 @@ function Layout() {
 		setGameHasFinished(true)
 	}
 
-	const resetGame = () => {
+	function resetGame() {
 		setMines(() => generateRandomMines(width, height, mineNumber))
 		setGameHasFinished(false)
 	}
