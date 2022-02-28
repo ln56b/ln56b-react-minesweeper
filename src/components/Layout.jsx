@@ -45,7 +45,6 @@ function Layout() {
 	const [hasStartedGame, setGameHasStarted] = React.useState(false)
 	const [hasFinishedGame, setGameHasFinished] = React.useState(false)
 	const [hasWon, setHasWon] = React.useState(false)
-	const [timer, setTimer] = React.useState(0)
 
 	function onSubmitForm({
 		height: newHeight,
@@ -60,10 +59,6 @@ function Layout() {
 		setMineNumber(newMines)
 		setMines(generateRandomMines(newWidth, newHeight, newMines))
 		setGameHasStarted(true)
-	}
-
-	function onFinalCount(count) {
-		setTimer(count)
 	}
 
 	function onGameEnd(state) {
@@ -84,10 +79,7 @@ function Layout() {
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
 			{hasStartedGame && <div>{mineNumber}</div>}
-			{hasStartedGame && (
-				<Timer hasFinishedGame={hasFinishedGame} finalTimer={onFinalCount} />
-			)}
-			{hasStartedGame && hasFinishedGame && <div>{timer}</div>}
+			{hasStartedGame && <Timer hasFinishedGame={hasFinishedGame} />}
 			<div onClick={() => resetGame()}>😇</div>
 			<Table
 				width={width}

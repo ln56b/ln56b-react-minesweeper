@@ -1,17 +1,15 @@
 import React from 'react'
 
-function Timer({ hasFinishedGame, finalTimer }) {
+function Timer({ hasFinishedGame }) {
 	const [timer, settimer] = React.useState(0)
 
 	React.useEffect(() => {
-		setTimeout(() => settimer(timer + 1), 1000)
-	}, [timer])
+		if (!hasFinishedGame) {
+			setTimeout(() => settimer(timer + 1), 1000)
+		}
+	}, [timer, hasFinishedGame])
 
-	React.useEffect(() => {
-		finalTimer(timer)
-	}, [hasFinishedGame])
-
-	return <div>{!hasFinishedGame && timer}</div>
+	return <div>{timer}</div>
 }
 
 export default Timer
