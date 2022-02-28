@@ -1,6 +1,7 @@
 import './Table.css'
 import React from 'react'
 import Square from './Square'
+import { FIELD_STATES } from '../config/constants'
 
 const createFilledTable = (width, height, value) =>
 	Array(width)
@@ -43,39 +44,40 @@ function Table({
 	hasFinishedGame,
 	hasOpenedFirstCell,
 }) {
-	const [openFields, setOpenFields] = React.useState(
-		createFilledTable(width, height, false)
+	const [fieldStates, setFieldStates] = React.useState(
+		createFilledTable(width, height, FIELD_STATES.CLOSED)
 	)
 	const [fieldValues, setFieldValues] = React.useState(
 		createFilledTable(width, height, 0)
 	)
 
-	const openArea = ({ openFields, fieldValues, x, y }) => {
+	const openArea = ({ fieldStates, fieldValues, x, y }) => {
 		if (
 			x < 0 ||
-			openFields.length <= x ||
+			fieldStates.length <= x ||
 			y < 0 ||
-			openFields[0].length <= y ||
-			openFields[x][y]
+			fieldStates[0].length <= y ||
+			fieldStates[x][y] === FIELD_STATES.OPEN ||
+			fieldStates[x][y] === FIELD_STATES.FLAGGED
 		) {
 			return
 		}
-		openFields[x][y] = true
+		fieldStates[x][y] = FIELD_STATES.OPEN
 		openCellsNumber++
 
 		if (fieldValues[x][y] > 0) {
-			return openFields
+			return fieldStates
 		}
 		for (let x1 of [x - 1, x, x + 1]) {
 			for (let y1 of [y - 1, y, y + 1]) {
-				openArea({ openFields, fieldValues, x: x1, y: y1 })
+				openArea({ fieldStates, fieldValues, x: x1, y: y1 })
 			}
 		}
 	}
 
 	React.useEffect(() => {
 		openCellsNumber = 0
-		setOpenFields(createFilledTable(width, height, false))
+		setFieldStates(createFilledTable(width, height, FIELD_STATES.CLOSED))
 		setFieldValues(calculateFieldValues(width, height, mines))
 	}, [mines, height, width])
 
@@ -89,18 +91,35 @@ function Table({
 	}, [openCellsNumber])
 
 	function openField(x, y) {
-		// This condition is not necessary, just speeds up the function if the field is already open.
-		if (openFields[x][y]) {
+		if (
+			fieldStates[x][y] === FIELD_STATES.OPEN ||
+			fieldStates[x][y] === FIELD_STATES.FLAGGED
+		) {
 			return
 		}
-		let newOpenFields = JSON.parse(JSON.stringify(openFields))
+		let newFieldStates = JSON.parse(JSON.stringify(fieldStates))
 		if (mines[x][y]) {
-			newOpenFields[x][y] = true
+			newFieldStates[x][y] = FIELD_STATES.OPEN
 			endGame('lose')
 		} else {
-			openArea({ openFields: newOpenFields, fieldValues, x, y })
+			openArea({ fieldStates: newFieldStates, fieldValues, x, y })
 		}
-		setOpenFields(newOpenFields)
+		setFieldStates(newFieldStates)
+		return
+	}
+
+	function flagField(x, y) {
+		if (fieldStates[x][y] === FIELD_STATES.OPEN) {
+			return
+		}
+		let newFieldStates = JSON.parse(JSON.stringify(fieldStates))
+		if (fieldStates[x][y] === FIELD_STATES.CLOSED) {
+			newFieldStates[x][y] = FIELD_STATES.FLAGGED
+		} else if (fieldStates[x][y] === FIELD_STATES.FLAGGED) {
+			newFieldStates[x][y] = FIELD_STATES.CLOSED
+		}
+		setFieldStates(newFieldStates)
+		return
 	}
 
 	return (
@@ -108,14 +127,15 @@ function Table({
 			{createFilledTable(width, height, 0).map((column, x) => (
 				<div className='table-column' key={x}>
 					{fieldValues.length === width &&
-						openFields.length === width &&
+						fieldStates.length === width &&
 						column.map((field, y) => (
 							<Square
 								key={`${x.toString()},${y.toString()}`}
 								value={fieldValues[x][y]}
 								isMine={mines[x][y]}
-								isOpen={openFields[x][y]}
-								setIsOpen={() => openField(x, y)}
+								state={fieldStates[x][y]}
+								openField={() => openField(x, y)}
+								flagField={() => flagField(x, y)}
 								isReadonly={hasFinishedGame}
 							/>
 						))}
