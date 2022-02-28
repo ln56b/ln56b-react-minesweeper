@@ -42,8 +42,8 @@ function Layout() {
 	const [height, setHeight] = React.useState(testHeight)
 	const [width, setWidth] = React.useState(testWidth)
 	const [mines, setMines] = React.useState(testMines)
-	const [hasStartedGame, setGameHasStarted] = React.useState(false)
-	const [hasFinishedGame, setGameHasFinished] = React.useState(false)
+	const [hasStartedGame, setHasStartedGame] = React.useState(false)
+	const [hasFinishedGame, setHasFinishedGame] = React.useState(false)
 	const [hasWon, setHasWon] = React.useState(false)
 	const [hasOpenedFirstCell, setHasOpenedFirstCell] = React.useState(false)
 
@@ -59,7 +59,7 @@ function Layout() {
 		setWidth(newWidth)
 		setMineNumber(newMines)
 		setMines(generateRandomMines(newWidth, newHeight, newMines))
-		setGameHasStarted(true)
+		setHasStartedGame(true)
 	}
 
 	function onGameEnd(state) {
@@ -68,12 +68,12 @@ function Layout() {
 		} else {
 			setHasWon(false)
 		}
-		setGameHasFinished(true)
+		setHasFinishedGame(true)
 	}
 
 	function resetGame() {
 		setMines(() => generateRandomMines(width, height, mineNumber))
-		setGameHasFinished(false)
+		setHasFinishedGame(false)
 	}
 
 	function startTimer(openedCell) {

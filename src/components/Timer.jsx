@@ -1,11 +1,11 @@
 import React from 'react'
 
 function Timer({ hasOpenedFirstCell, hasFinishedGame }) {
-	const [timer, settimer] = React.useState(0)
+	const [timer, setTimer] = React.useState(0)
 
 	React.useEffect(() => {
 		if (hasOpenedFirstCell && !hasFinishedGame) {
-			setTimeout(() => settimer(timer + 1), 1000)
+			setTimeout(() => setTimer(timer + 1), 1000)
 		}
 	}, [timer, hasOpenedFirstCell, hasFinishedGame])
 
