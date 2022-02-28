@@ -1,8 +1,8 @@
-import React from "react"
-import Editor from "./Editor"
-import Table from "./Table"
-import Button from "@mui/material/Button"
-import Timer from "./Timer"
+import React from 'react'
+import Editor from './Editor'
+import Table from './Table'
+import Button from '@mui/material/Button'
+import Timer from './Timer'
 
 const createFilledTable = (width, height, value) =>
 	Array(width)
@@ -13,7 +13,7 @@ const randomInt = (n) => Math.floor(Math.random() * n)
 
 const generateRandomMines = (width, height, mineNumber) => {
 	if (!width || !height) {
-		throw new Error("generateRandomMines: no width or height given")
+		throw new Error('generateRandomMines: no width or height given')
 	}
 	let mines = createFilledTable(width, height, false)
 	if (mineNumber === 0) {
@@ -50,7 +50,7 @@ function Layout() {
 	function onSubmitForm({
 		height: newHeight,
 		width: newWidth,
-		mines: newMines
+		mines: newMines,
 	}) {
 		newHeight = Number(newHeight)
 		newWidth = Number(newWidth)
@@ -67,7 +67,7 @@ function Layout() {
 	}
 
 	function onGameEnd(state) {
-		if (state === "win") {
+		if (state === 'win') {
 			setHasWon(true)
 		} else {
 			setHasWon(false)

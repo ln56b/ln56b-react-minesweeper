@@ -1,35 +1,35 @@
-import React, { useReducer, useState } from "react"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
-import Paper from "@mui/material/Paper"
-import Button from "@mui/material/Button"
+import React, { useReducer, useState } from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
 
 const LEVELS = {
-	Beginner: "beginner",
-	Intermediate: "intermediate",
-	Expert: "expert",
-	Custom: "custom"
+	Beginner: 'beginner',
+	Intermediate: 'intermediate',
+	Expert: 'expert',
+	Custom: 'custom',
 }
 
 const initialFormState = {
 	level: LEVELS.Beginner,
-	marks: false
+	marks: false,
 }
 
 const formReducer = (state, event) => {
 	if (event.reset) {
 		return {
 			level: LEVELS.Beginner,
-			marks: false
+			marks: false,
 		}
 	}
 	return {
 		...state,
-		[event.name]: event.value
+		[event.name]: event.value,
 	}
 }
 
@@ -60,16 +60,16 @@ function Editor({ submitForm }) {
 			setSubmitting(false)
 
 			setFormData({
-				reset: true
+				reset: true,
 			})
 		}, 3000)
 	}
 
-	function handleChange(event) {
-		const isCheckbox = event.target.type === "checkbox"
+	const handleChange = (event) => {
+		const isCheckbox = event.target.type === 'checkbox'
 		setFormData({
 			name: event.target.name,
-			value: isCheckbox ? event.target.checked : event.target.value
+			value: isCheckbox ? event.target.checked : event.target.value,
 		})
 	}
 
@@ -84,7 +84,7 @@ function Editor({ submitForm }) {
 			<input
 				name={name}
 				onChange={handleChange}
-				value={value || ""}
+				value={value || ''}
 				disabled={formData.level !== LEVELS.Custom}
 				type='number'
 				min={min}
@@ -114,7 +114,7 @@ function Editor({ submitForm }) {
 						<TableHead>
 							<TableRow>
 								<TableCell>Levels</TableCell>
-								{["Height", "Width", "Mines"].map((name) => (
+								{['Height', 'Width', 'Mines'].map((name) => (
 									<TableCell align='right' key={name}>
 										{name}
 									</TableCell>
@@ -137,9 +137,9 @@ function Editor({ submitForm }) {
 										</label>
 									</div>
 								</TableCell>
-								{createReadonlyCell("height", 9)}
-								{createReadonlyCell("width", 9)}
-								{createReadonlyCell("mines", 10)}
+								{createReadonlyCell('height', 9)}
+								{createReadonlyCell('width', 9)}
+								{createReadonlyCell('mines', 10)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -156,9 +156,9 @@ function Editor({ submitForm }) {
 										</label>
 									</div>
 								</TableCell>
-								{createReadonlyCell("height", 16)}
-								{createReadonlyCell("width", 16)}
-								{createReadonlyCell("mines", 40)}
+								{createReadonlyCell('height', 16)}
+								{createReadonlyCell('width', 16)}
+								{createReadonlyCell('mines', 40)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -175,9 +175,9 @@ function Editor({ submitForm }) {
 										</label>
 									</div>
 								</TableCell>
-								{createReadonlyCell("height", 16)}
-								{createReadonlyCell("width", 30)}
-								{createReadonlyCell("mines", 99)}
+								{createReadonlyCell('height', 16)}
+								{createReadonlyCell('width', 30)}
+								{createReadonlyCell('mines', 99)}
 							</TableRow>
 							<TableRow>
 								<TableCell component='th' scope='level'>
@@ -194,16 +194,16 @@ function Editor({ submitForm }) {
 										</label>
 									</div>
 								</TableCell>
-								{createNumberCell("height", formData.height, 1, 50)}
-								{createNumberCell("width", formData.width, 1, 50)}
-								{createNumberCell("mines", formData.mines, 1, 200)}
+								{createNumberCell('height', formData.height, 1, 50)}
+								{createNumberCell('width', formData.width, 1, 50)}
+								{createNumberCell('mines', formData.mines, 1, 200)}
 							</TableRow>
 							<TableRow>
 								<TableCell align='center' colSpan={4}>
 									<label>
 										<p>Marks?</p>
 										<input
-											checked={formData["marks"] || false}
+											checked={formData['marks'] || false}
 											name='marks'
 											onChange={handleChange}
 											type='checkbox'

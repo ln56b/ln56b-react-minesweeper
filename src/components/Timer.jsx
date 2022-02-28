@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 function Timer({ hasFinishedGame, finalTimer }) {
 	const [timer, settimer] = React.useState(0)

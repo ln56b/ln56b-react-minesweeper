@@ -1,5 +1,5 @@
-import React from "react"
-import "./Square.css"
+import React from 'react'
+import './Square.css'
 
 function valueDisplay(value) {
 	switch (value) {
@@ -20,17 +20,17 @@ function valueDisplay(value) {
 		case 8:
 			return <font color='black'>8</font>
 		default:
-			return ""
+			return ''
 	}
 }
 
 function Square({ value, isMine, isOpen, setIsOpen, isReadonly }) {
-	const display = isMine ? "💣" : valueDisplay(value)
-	const className = isOpen ? "open" : "closed"
+	const display = isMine ? '💣' : valueDisplay(value)
+	const className = isOpen ? 'open' : 'closed'
 
 	return (
 		<button
-			className={className + " square"}
+			className={className + ' square'}
 			onClick={() => (isReadonly ? null : setIsOpen(true))}
 		>
 			{isOpen && display}
