@@ -1,6 +1,6 @@
 {
-	"prettier.jsxSingleQuote": true,
-	"prettier.semi": false,
-	"editor.tabSize": 2,
-	"editor.detectIndentation": false
+  "prettier.jsxSingleQuote": true,
+  "prettier.semi": false,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false
 }
