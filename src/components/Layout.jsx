@@ -1,9 +1,13 @@
-import React from "react"
-import Editor from "./Editor"
-import Table from "./Table"
-import Button from "@mui/material/Button"
+import React from 'react'
+import Editor from './Editor'
+import Table from './Table'
+import Button from '@mui/material/Button'
+import Timer from './Timer'
 
-const createFilledTable = (width, height, value) => Array(width).fill(null).map(() => new Array(height).fill(value))
+const createFilledTable = (width, height, value) =>
+	Array(width)
+		.fill(null)
+		.map(() => new Array(height).fill(value))
 
 const randomInt = (n) => Math.floor(Math.random() * n)
 
@@ -33,16 +37,21 @@ const testWidth = 8
 const testHeight = 6
 const testMines = generateRandomMines(testWidth, testHeight, testMineNumber)
 
-
 function Layout() {
 	const [mineNumber, setMineNumber] = React.useState(testMineNumber)
 	const [height, setHeight] = React.useState(testHeight)
 	const [width, setWidth] = React.useState(testWidth)
 	const [mines, setMines] = React.useState(testMines)
-  const [hasFinishedGame, setGameHasFinished] = React.useState(false)
-  const [hasWon, setHasWon] = React.useState(false)
+	const [hasStartedGame, setHasStartedGame] = React.useState(false)
+	const [hasFinishedGame, setHasFinishedGame] = React.useState(false)
+	const [hasWon, setHasWon] = React.useState(false)
+	const [hasOpenedFirstCell, setHasOpenedFirstCell] = React.useState(false)
 
-	const onSubmitForm = ({ height: newHeight, width: newWidth, mines: newMines }) => {
+	function onSubmitForm({
+		height: newHeight,
+		width: newWidth,
+		mines: newMines,
+	}) {
 		newHeight = Number(newHeight)
 		newWidth = Number(newWidth)
 		newMines = Number(newMines)
@@ -50,27 +59,38 @@ function Layout() {
 		setWidth(newWidth)
 		setMineNumber(newMines)
 		setMines(generateRandomMines(newWidth, newHeight, newMines))
+		setHasStartedGame(true)
 	}
 
-	const onGameEnd = (state) => {
+	function onGameEnd(state) {
 		if (state === 'win') {
 			setHasWon(true)
 		} else {
 			setHasWon(false)
 		}
-		setGameHasFinished(true)
-		
+		setHasFinishedGame(true)
 	}
 
-	const resetGame = () => {
+	function resetGame() {
 		setMines(() => generateRandomMines(width, height, mineNumber))
-		setGameHasFinished(false)
+		setHasFinishedGame(false)
+	}
 
+	function startTimer(openedCell) {
+		setHasOpenedFirstCell(openedCell)
 	}
 
 	return (
 		<React.Fragment>
 			<Editor submitForm={onSubmitForm} />
+			{hasStartedGame && <div>{mineNumber}</div>}
+			{hasStartedGame && (
+				<Timer
+					hasOpenedFirstCell={hasOpenedFirstCell}
+					hasFinishedGame={hasFinishedGame}
+				/>
+			)}
+			<div onClick={() => resetGame()}>😇</div>
 			<Table
 				width={width}
 				height={height}
@@ -78,22 +98,15 @@ function Layout() {
 				mines={mines}
 				endGame={onGameEnd}
 				hasFinishedGame={hasFinishedGame}
+				hasOpenedFirstCell={startTimer}
 			/>
-						{
-				(hasFinishedGame &&	hasWon) &&
-			<h2>You won ! </h2>
-			}
-									{
-				(hasFinishedGame &&	!hasWon) &&
-			<h2>You lost ! </h2>
-			}
-			{
-				hasFinishedGame &&
-			<Button variant='contained' type='submit' onClick={() => resetGame()}>
-		Play again
-		</Button>
-			}
-		
+			{hasFinishedGame && hasWon && <h2>You won ! </h2>}
+			{hasFinishedGame && !hasWon && <h2>You lost ! </h2>}
+			{hasFinishedGame && (
+				<Button variant='contained' type='submit' onClick={() => resetGame()}>
+					Play again
+				</Button>
+			)}
 		</React.Fragment>
 	)
 }
