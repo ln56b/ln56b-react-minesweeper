@@ -1,7 +1,7 @@
-import React from 'react'
-import Editor from './Editor'
-import Table from './Table'
 import Button from '@mui/material/Button'
+import React from 'react'
+import Board from './Board'
+import Editor from './Editor'
 import Timer from './Timer'
 
 const createFilledTable = (width, height, value) =>
@@ -91,7 +91,7 @@ function Layout() {
 				/>
 			)}
 			<div onClick={() => resetGame()}>😇</div>
-			<Table
+			<Board
 				width={width}
 				height={height}
 				mineNumber={mineNumber}

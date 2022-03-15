@@ -1,9 +1,9 @@
-import './Table.css'
+import './Board.css'
 import React from 'react'
 import Square from './Square'
 import { FIELD_STATES } from '../config/constants'
 
-const createFilledTable = (width, height, value) =>
+const createFilledBoard = (width, height, value) =>
 	Array(width)
 		.fill(null)
 		.map(() => new Array(height).fill(value))
@@ -23,7 +23,7 @@ const calculateFieldValue = (x, y, mines) => {
 }
 
 const calculateFieldValues = (width, height, mines) => {
-	let fieldValues = createFilledTable(width, height, 0)
+	let fieldValues = createFilledBoard(width, height, 0)
 
 	for (let x = 0; x < width; x++) {
 		for (let y = 0; y < height; y++) {
@@ -35,7 +35,7 @@ const calculateFieldValues = (width, height, mines) => {
 
 let openCellsNumber = 0
 
-function Table({
+function Board({
 	width,
 	height,
 	mineNumber,
@@ -45,10 +45,10 @@ function Table({
 	hasOpenedFirstCell,
 }) {
 	const [fieldStates, setFieldStates] = React.useState(
-		createFilledTable(width, height, FIELD_STATES.CLOSED)
+		createFilledBoard(width, height, FIELD_STATES.CLOSED)
 	)
 	const [fieldValues, setFieldValues] = React.useState(
-		createFilledTable(width, height, 0)
+		createFilledBoard(width, height, 0)
 	)
 
 	const openArea = ({ fieldStates, fieldValues, x, y }) => {
@@ -77,7 +77,7 @@ function Table({
 
 	React.useEffect(() => {
 		openCellsNumber = 0
-		setFieldStates(createFilledTable(width, height, FIELD_STATES.CLOSED))
+		setFieldStates(createFilledBoard(width, height, FIELD_STATES.CLOSED))
 		setFieldValues(calculateFieldValues(width, height, mines))
 	}, [mines, height, width])
 
@@ -123,9 +123,9 @@ function Table({
 	}
 
 	return (
-		<div className='table'>
-			{createFilledTable(width, height, 0).map((column, x) => (
-				<div className='table-column' key={x}>
+		<div className='board'>
+			{createFilledBoard(width, height, 0).map((column, x) => (
+				<div className='board-column' key={x}>
 					{fieldValues.length === width &&
 						fieldStates.length === width &&
 						column.map((field, y) => (
@@ -145,4 +145,4 @@ function Table({
 	)
 }
 
-export default Table
+export default Board

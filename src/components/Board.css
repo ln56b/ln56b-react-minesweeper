@@ -1,0 +1,9 @@
+.board {
+	display: flex;
+	flex-direction: row;
+}
+
+.board-column {
+	display: flex;
+	flex-direction: column;
+}
